@@ -1,0 +1,31 @@
+%insane vampire responds the same way as a sane human
+%insane human responds the same way as a sane vampire
+%if someone says he is human, he must be sane
+%if someone says they are a vampire, they must be insane
+%if someone says he is sane, he must be human
+%if someone says he is insane, he must be a vampire
+%married couples have to be both vampires or both humans
+
+assign(domain_size,2).
+assign(max_models,-1).
+
+formulas(transylvania).
+  all x (inhabitant(x) -> vampire(x) | human(x)).
+  all x (vampire(x) -> sane(x) | insane(x)).
+  all x (human(x) -> sane(x) | insane(x)).
+  all x ((sane(x) -> -insane(x)) & (insane(x) -> -sane(x))).
+  all x ((human(x) -> -vampire(x)) & (vampire(x) -> -human(x))).
+  sane(x) & human(x) -> m(x).
+  insane(x) & vampire(x) -> m(x).
+  insane(x) & human(x) -> -m(x).
+  sane(x) & vampire(x) -> -m(x).
+end_of_list.
+
+formulas(puzzle).  
+  inhabitant(boris) & inhabitant(dorothy).
+  (vampire(boris) & vampire(dorothy)) | (human(boris) & human(dorothy)).
+  m(boris) <-> (vampire(boris) & vampire(dorothy)).
+  m(dorothy) <-> (vampire(boris) & vampire(dorothy)).
+  m(boris) <-> ((sane(boris) & sane(dorothy)) | (insane(boris) & insane(dorothy))).
+  boris=0 & dorothy=1.  %remove isomorphisms
+end_of_list.
