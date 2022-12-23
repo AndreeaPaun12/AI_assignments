@@ -1,0 +1,39 @@
+formulas(assumptions).
+
+ipj -> -sds & -ids.
+ipj -> ips | sps.
+spj -> sds | ids.
+spj -> -sps & -ips.
+idj -> -sds & -ids.
+idj -> ips | sps.
+sdj -> sds | ids.
+sdj -> -sps & -ips.
+
+ids -> -spj & -ipj.
+sds -> spj | ipj.
+ips -> -spj & -ipj.
+sps -> spj | ipj.
+ids -> sdj | idj.
+sds -> -sdj & -idj.
+ips -> sdj | idj.
+sps -> -sdj & -idj.
+
+
+ipj -> -idj & -spj & -sdj.
+spj -> -ipj & -sdj & -idj.
+idj -> -ipj & -sdj & -spj.
+sdj -> -ipj & -spj & -idj.
+
+ips -> -ids & -sps & -sds.
+sps -> -ips & -sds & -ids.
+ids -> -ips & -sds & -sps.
+sds -> -ips & -sps & -ids.
+
+ipj | spj | idj | sdj.
+ips | sps | ids | sds.
+
+
+end_of_list.
+
+formulas(goals).
+end_of_list.

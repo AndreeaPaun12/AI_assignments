@@ -1,0 +1,16 @@
+formulas(assumptions).
+  all x (inhabitant(x) -> doctor(x) | patient(x)).
+  all x (doctor(x) -> sane(x) | insane(x)).
+  all x (patient(x) -> sane(x) | insane(x)).
+  all x ((sane(x) -> -insane(x)) & (insane(x) -> -sane(x))).
+  all x ((patient(x) -> -doctor(x)) & (doctor(x) -> -patient(x))).
+  inhabitant(A) & inhabitant(B).
+  sane(A) <-> insane(B).
+  insane(A) <-> sane(B).
+  sane(B) <-> doctor(A).
+  insane(B) <-> patient(A).
+end_of_list.
+
+formulas(goals).  
+  sane(A).
+end_of_list.

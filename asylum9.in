@@ -1,0 +1,21 @@
+assign(domain_size,4).
+assign(max_models,-1).
+
+formulas(asylum).
+  all x (inhabitant(x) -> doctor(x) | patient(x)).
+  all x (doctor(x) -> sane(x) | insane(x)).
+  all x (patient(x) -> sane(x) | insane(x)).
+  all x ((sane(x) -> -insane(x)) & (insane(x) -> -sane(x))).
+  all x ((patient(x) -> -doctor(x)) & (doctor(x) -> -patient(x))).
+end_of_list.
+
+formulas(puzzle).  
+  inhabitant(A) & inhabitant(B) & inhabitant(C) & inhabitant(D).
+  sane(A) <-> (sane(B) & sane(C)) | (insane(B) & insane(C)).
+  insane(A) <-> (sane(B) & insane(C)) | (insane(B) & sane(C)).
+  sane(B) <-> (sane(A) & sane(D)) | (insane(A) & insane(D)).
+  insane(B) <-> (sane(A) & insane(D)) | (insane(A) & sane(D)).
+  sane(C) <-> (doctor(C) & patient(D)) | (patient(C) & doctor(D)) | (patient(C) & patient(D)).
+  insane(C) <-> (doctor(C) & doctor(D)).
+  A=0 & B=1 & C=2 & D=3.  %remove isomorphisms
+end_of_list.

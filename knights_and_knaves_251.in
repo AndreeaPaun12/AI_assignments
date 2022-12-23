@@ -1,0 +1,34 @@
+%A very special island is inhabited only by knights and knaves. Knights always tell the truth, and knaves always lie.
+%You meet seven inhabitants: Ted, Alice, Zed, Marge, Zippy, Sally and Betty.
+
+%Ted tells you that Alice is a knave.
+%Alice says that Sally is a knight or Zed is a knight.
+%Zed claims that Alice could claim that Betty is a knight.
+%Marge claims, “It's false that Betty is a knave.”
+%Zippy says that only a knave would say that Ted is a knave.
+%Sally claims, “I am a knight and Betty is a knave.”
+%Betty says that Zippy is a knave or Ted is a knave.
+
+%Can you determine who is a knight and who is a knave?
+
+assign(domain_size,7).
+assign(max_models,-1).
+
+formulas(island_of_truth).
+  all x (inhabitant(x) -> knight(x) | knave(x)).
+  all x ((knight(x) -> -knave(x)) & (knave(x) -> -knight(x))).
+  knight(x) -> m(x).
+  knave(x) -> -m(x).
+end_of_list.
+
+formulas(puzzle).  
+  Ted=0 & Alice=1 & Zed=2 & Marge=3 & Zippy=4 & Sally=5 & Betty=6.  %remove isomorphisms
+  inhabitant(Ted) & inhabitant(Alice) & inhabitant(Zed) & inhabitant(Marge) & inhabitant(Zippy) & inhabitant(Sally) & inhabitant(Betty). 
+  m(Ted) <-> knave(Alice).
+  m(Alice) <-> (knight(Sally) | knight(Zed)).
+  m(Zed) <-> ((knight(Alice) & knight(Betty)) | (knave(Alice) & knave(Betty))).
+  m(Marge) <-> knight(Betty).
+  m(Zippy) <-> knight(Ted).
+  m(Sally) <-> (knight(Sally) & knave(Betty)).
+  m(Betty) <-> (knave(Zippy) | knave(Ted)).
+end_of_list.
