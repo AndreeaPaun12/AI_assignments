@@ -1,0 +1,17 @@
+assign(domain_size,2).
+assign(max_models,-1).
+
+formulas(asylum).
+  all x (inhabitant(x) -> doctor(x) | patient(x)).
+  all x (doctor(x) -> sane(x) | insane(x)).
+  all x (patient(x) -> sane(x) | insane(x)).
+  all x ((sane(x) -> -insane(x)) & (insane(x) -> -sane(x))).
+  all x ((patient(x) -> -doctor(x)) & (doctor(x) -> -patient(x))).
+end_of_list.
+
+formulas(puzzle).  
+  inhabitant(jones) & inhabitant(smith).
+  sane(jones) <-> doctor(smith).
+  sane(smith) <-> patient(jones).
+  jones=0 & smith=1.  %remove isomorphisms
+end_of_list.
